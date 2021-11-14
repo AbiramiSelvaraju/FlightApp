@@ -37,10 +37,6 @@ public class FlightService {
     public List<Flight> getAllFlights(){
         return flightRepo.findAll();
     }
-
-    public Flight createFlight(Flight m) {
-        return flightRepo.save(m);
-    }
 // Flight travel details
     public List<FlightTravelDetails> getAllFlightTravelDetails() {
         return flightTravelRepo.findAll();
@@ -62,7 +58,7 @@ public class FlightService {
                                                          differenceHours <= 20 ? ticketCost = 2000 :
                                                                  1000;
 
-        flightTravelDetails.setEstimateJourneyDuration(""+differenceHours+" Hrs "+ differenceMins+ "Min(s)");
+        flightTravelDetails.setEstimateJourneyDuration(""+differenceHours+" Hrs "+ differenceMins+ " Min(s)");
         flightTravelDetails.setTicketCost(ticketCost);
         flightTravelRepo.save(flightTravelDetails);
     }

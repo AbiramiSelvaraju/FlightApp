@@ -28,6 +28,14 @@ public class Ticket {
     private Boolean isCancelled;
     private LocalDate journeyDate;
     private Timestamp createdOn;
+
+    public Ticket(String username, String emailId, int totalSeatsBooked, LocalDate journeyDate){
+        this.username = username;
+        this.emailId = emailId;
+        this.totalSeatsBooked = totalSeatsBooked;
+        this.journeyDate= journeyDate;
+    }
+
     @JsonIgnore
     @ManyToOne
     private User user;

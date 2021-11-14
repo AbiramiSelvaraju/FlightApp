@@ -3,10 +3,12 @@ package com.demo.services;
 import com.demo.dto.TicketDTO;
 import com.demo.entities.Airline;
 import com.demo.entities.Ticket;
+import com.demo.exception.ModelNotFoundException;
 import com.demo.mapper.TicketMapper;
 import com.demo.repositories.FlightTravelRepository;
 import com.demo.repositories.PassengerRepository;
 import com.demo.repositories.TicketRepository;
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,11 @@ public class TicketService {
 
     public List<Ticket> getAllTickets() {
         return ticketRepo.findAll();
+    }
+
+    public Ticket getTicketById(int id) throws ModelNotFoundException {
+        Ticket ticket =  ticketRepo.findById(id).orElseThrow(()-> new ModelNotFoundException("Ticket not found with id: "+id));
+        return ticket;
     }
 
     public String createTicket(TicketDTO ticketDTO) {

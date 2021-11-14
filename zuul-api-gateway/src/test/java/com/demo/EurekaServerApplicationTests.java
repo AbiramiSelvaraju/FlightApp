@@ -10,4 +10,6 @@ class EurekaServerApplicationTests {
 	void contextLoads() {
 	}
 
+
+
 }
