@@ -6,6 +6,7 @@ import com.demo.dto.UserDTO;
 import com.demo.entities.Airline;
 import com.demo.entities.Ticket;
 import com.demo.entities.User;
+import com.demo.exception.ModelNotFoundException;
 import com.demo.repositories.TicketRepository;
 import com.demo.services.TicketService;
 import com.demo.services.UserService;
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/ticket/{ticketId}/cancel")
-    public ResponseEntity<HttpStatus> cancelTicket(@PathVariable int ticketId ) {
+    public ResponseEntity<HttpStatus> cancelTicket(@PathVariable int ticketId ) throws ModelNotFoundException {
         ticketService.cancelTicket(ticketId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

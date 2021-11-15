@@ -10,6 +10,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,44 +31,26 @@ class TicketServiceTest {
 	TicketService service;
 
 
-	@Autowired
-	TicketRepository repo;
-
-//	Test get Ticket
-
 	@Test
-	public void testGetTicketByValidId() {
+	public void testGetTicketByValidId() throws  ModelNotFoundException{
 		int id = 1;
-//		Ticket ticket = new Ticket("userName",
-//				"abi@gmail.com", 3, LocalDate.of(2021, 11, 12));
-		Mockito.when(repo.findById(id)).thenReturn(Optional.of(new Ticket()));
-
-		try{
-			Ticket t = service.getTicketById(id);
+		Ticket t = new Ticket("Ab","ab@gmail.com",3);
+		Mockito.when(service.getTicketById(anyInt())).thenReturn(t);
+//		try{
+//			Ticket t = service.getTicketById(id);
 			Assertions.assertNotNull(t);
 			MatcherAssert.assertThat(t, Matchers.instanceOf(Ticket.class));
-		}catch (ModelNotFoundException ex){
-			System.out.println(ex.getLocalizedMessage());
-		}
+//		}catch (ModelNotFoundException ex){
+//			System.out.println(ex.getLocalizedMessage());
+//		}
 	}
 
 	@Test
-	public void testGetTicketByInValidId() {
-		int id = -1;
-		Assertions.assertThrows(EntityNotFoundException.class, ()-> {
-			service.getTicketById(id);});
-	}
-
-//	Test create Ticket
-	@Test
-	public void testCreateTicket() {
-		Ticket ticket = new Ticket();
-
-		Mockito.when(repo.save(ticket)).thenReturn(ticket);
-
-		if(service.createTicket(new TicketDTO()).equals(ticket)){
-			System.out.println("Created successfully!");
-		}
+	public void testGetTicketByInValidId() throws  ModelNotFoundException{
+		Mockito.doThrow(new ModelNotFoundException("")).when(service).getTicketById(ArgumentMatchers.anyInt());
+		Assertions.assertThrows(ModelNotFoundException.class, () -> {
+			service.getTicketById(ArgumentMatchers.anyInt());
+		});
 	}
 
 

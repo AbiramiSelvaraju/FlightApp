@@ -29,11 +29,10 @@ public class Ticket {
     private LocalDate journeyDate;
     private Timestamp createdOn;
 
-    public Ticket(String username, String emailId, int totalSeatsBooked, LocalDate journeyDate){
+    public Ticket(String username, String emailId, int totalSeatsBooked){
         this.username = username;
         this.emailId = emailId;
         this.totalSeatsBooked = totalSeatsBooked;
-        this.journeyDate= journeyDate;
     }
 
     @JsonIgnore

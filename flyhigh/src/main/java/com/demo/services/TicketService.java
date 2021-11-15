@@ -68,8 +68,8 @@ public class TicketService {
         return randomUniqueNumber;
     }
 
-    public Ticket cancelTicket(int ticketId) {
-            Ticket ticket = ticketRepo.findById(ticketId).orElseThrow(()->new EntityNotFoundException("Entity Not Found to Cancel"));
+    public Ticket cancelTicket(int ticketId) throws  ModelNotFoundException{
+            Ticket ticket = ticketRepo.findById(ticketId).orElseThrow(()->new ModelNotFoundException("Entity Not Found to Cancel"));
             ticket.setIsCancelled(false);
             return ticketRepo.save(ticket);
     }
