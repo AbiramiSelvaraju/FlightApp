@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.*;
 @SpringBootTest
 class TicketServiceTest {
 
-	@Autowired
+	@Mock
 	TicketService service;
 
 

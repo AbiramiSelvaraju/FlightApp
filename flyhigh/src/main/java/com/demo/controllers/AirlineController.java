@@ -6,6 +6,7 @@ import com.demo.services.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,15 @@ public class AirlineController {
 
     @Autowired
     private AirlineService service;
+
+//    @Autowired
+    private KafkaTemplate kafkaTemplate;
+
+    public AirlineController(KafkaTemplate kafkaTemplate){
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
+    private static final String TOPIC = "kafka_topic";
 
     @GetMapping("/airline")
     public List<Airline> getAllAirlines(){
@@ -31,7 +41,10 @@ public class AirlineController {
 
     @PutMapping("/airline/{airlineId}/block")
     public ResponseEntity<HttpStatus> blockAirline(@PathVariable int airlineId ) {
-        service.blockAirline(airlineId);
+        AirlineDTO airlineDTO = service.blockAirline(airlineId);
+        com.demo.dto.Airline a = new com.demo.dto.Airline(airlineDTO.getName(), airlineDTO.getContactNumber(), airlineDTO.getContactAddress(), airlineDTO.getIsActive());
+
+        kafkaTemplate.send(TOPIC, a);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

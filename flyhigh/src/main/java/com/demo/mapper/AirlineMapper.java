@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 public interface AirlineMapper {
 
     Airline toAirline(AirlineDTO airlineDTO);
+
+    AirlineDTO toAirlineDTO(Airline airline);
 }

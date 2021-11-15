@@ -14,6 +14,5 @@ public class ControllerAdvisory extends ResponseEntityExceptionHandler {
 	public ResponseEntity<String> handleModelNotFoundException(ModelNotFoundException modelNotFoundException) {
 		return new ResponseEntity<>(modelNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
 	}
-	
 
 }

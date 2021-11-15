@@ -33,9 +33,11 @@ public class AirlineService {
         repo.save(airline);
     }
 
-    public Airline blockAirline(int airlineId) {
+    public AirlineDTO blockAirline(int airlineId) {
         Airline airline = repo.findById(airlineId).orElseThrow(()->new EntityNotFoundException("Entity Not Found to Block"));
         airline.setIsActive(false);
-        return repo.save(airline);
+        airline = repo.save(airline);
+        AirlineDTO airlineDTO = mapper.toAirlineDTO(airline);
+        return airlineDTO;
     }
 }
